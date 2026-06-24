@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8v7w9x1yza2b"
-path="res://.godot/imported/OEM437_12.png-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6.ctex"
+uid="uid://c8v7xax1y0a2b"
+path="res://.godot/imported/OEM437_12.png-8302ee30a06d6c339235528f3bbdcf75.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/fonts/OEM437_12.png"
-dest_files=["res://.godot/imported/OEM437_12.png-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6.ctex"]
+dest_files=["res://.godot/imported/OEM437_12.png-8302ee30a06d6c339235528f3bbdcf75.ctex"]
 
 [params]
 
