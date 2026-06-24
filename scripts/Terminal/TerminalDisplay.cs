@@ -126,44 +126,84 @@ public partial class TerminalDisplay : Control
 			return;
 		}
 
-		// Draw background
-		DrawRect(new Rect2(Vector2.Zero, Size), Config.BackgroundColor, true);
+		// Get palette (use default if not set in config)
+		TerminalPalette palette = Config.Palette ?? new TerminalPalette();
 
 		// Calculate scaled character size
 		int scaledCharWidth = Config.CharacterWidth * Config.DisplayScale;
 		int scaledCharHeight = Config.CharacterHeight * Config.DisplayScale;
 
-		// Draw each character in the terminal buffer
+		// Draw each character cell in the terminal buffer
 		for (int y = 0; y < _terminal.Rows; y++)
 		{
 			for (int x = 0; x < _terminal.Columns; x++)
 			{
-				char ch = _terminal.GetChar(x, y);
+				TerminalCell cell = _terminal.GetCell(x, y);
 
-				// Skip spaces (already drawn by background)
-				if (ch == ' ')
-				{
-					continue;
-				}
-
-				// Get character rectangle from font atlas
-				Rect2 sourceRect = Config.GetCharacterRect(ch);
-
-				// Calculate destination position (scaled)
+				// Calculate destination rectangle (scaled)
 				Vector2 destPos = new Vector2(
 					x * scaledCharWidth,
 					y * scaledCharHeight
 				);
-
 				Rect2 destRect = new Rect2(destPos, new Vector2(scaledCharWidth, scaledCharHeight));
+
+				// Get colors from palette
+				Color backgroundColor = palette.GetColor(cell.BackgroundColor);
+				Color foregroundColor = palette.GetColor(cell.ForegroundColor);
+
+				// Apply inverse attribute (swap colors)
+				if (cell.HasAttribute(TerminalAttributes.Inverse))
+				{
+					(backgroundColor, foregroundColor) = (foregroundColor, backgroundColor);
+				}
+
+				// Draw background for this cell
+				DrawRect(destRect, backgroundColor, true);
+
+				// Skip rendering character if hidden attribute is set
+				if (cell.HasAttribute(TerminalAttributes.Hidden))
+				{
+					continue;
+				}
+
+				// Skip spaces (transparent)
+				if (cell.Character == ' ')
+				{
+					continue;
+				}
+
+				// Apply dim attribute (reduce opacity)
+				if (cell.HasAttribute(TerminalAttributes.Dim))
+				{
+					foregroundColor.A *= 0.5f;
+				}
+
+				// Get character rectangle from font atlas
+				Rect2 sourceRect = Config.GetCharacterRect(cell.Character);
 
 				// Draw character with foreground color modulation
 				DrawTextureRectRegion(
 					Config.FontAtlas,
 					destRect,
 					sourceRect,
-					Config.ForegroundColor
+					foregroundColor
 				);
+
+				// Draw underline if attribute is set
+				if (cell.HasAttribute(TerminalAttributes.Underline))
+				{
+					Vector2 underlineStart = new Vector2(destPos.X, destPos.Y + scaledCharHeight - Config.DisplayScale);
+					Vector2 underlineEnd = new Vector2(destPos.X + scaledCharWidth, destPos.Y + scaledCharHeight - Config.DisplayScale);
+					DrawLine(underlineStart, underlineEnd, foregroundColor, Config.DisplayScale);
+				}
+
+				// Draw strikethrough if attribute is set
+				if (cell.HasAttribute(TerminalAttributes.Strikethrough))
+				{
+					Vector2 strikeStart = new Vector2(destPos.X, destPos.Y + scaledCharHeight / 2);
+					Vector2 strikeEnd = new Vector2(destPos.X + scaledCharWidth, destPos.Y + scaledCharHeight / 2);
+					DrawLine(strikeStart, strikeEnd, foregroundColor, Config.DisplayScale);
+				}
 			}
 		}
 
