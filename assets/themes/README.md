@@ -129,16 +129,16 @@ EnableCurvature = true                 # Enable screen curve
 ```csharp
 var custom = new TerminalConfig
 {
-    Columns = 80,
-    Rows = 25,
-    CharacterWidth = 8,
-    CharacterHeight = 12,
-    DisplayScale = 2,
-    FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_12.png"),
-    ForegroundColor = new Color(1, 0.5f, 0), // Orange
-    BackgroundColor = new Color(0.1f, 0.1f, 0.1f), // Dark gray
-    EnableScanlines = true,
-    ScanlineIntensity = 0.15f
+	Columns = 80,
+	Rows = 25,
+	CharacterWidth = 8,
+	CharacterHeight = 12,
+	DisplayScale = 2,
+	FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_12.png"),
+	ForegroundColor = new Color(1, 0.5f, 0), // Orange
+	BackgroundColor = new Color(0.1f, 0.1f, 0.1f), // Dark gray
+	EnableScanlines = true,
+	ScanlineIntensity = 0.15f
 };
 
 // Save to file
@@ -164,17 +164,17 @@ ResourceSaver.Save(custom, "res://assets/themes/custom_orange.tres");
 ```csharp
 var amber = new TerminalConfig
 {
-    Columns = 80,
-    Rows = 24,
-    CharacterWidth = 8,
-    CharacterHeight = 12,
-    DisplayScale = 2,
-    FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_12.png"),
-    ForegroundColor = new Color(1.0f, 0.75f, 0.0f), // Amber
-    BackgroundColor = Colors.Black,
-    CursorColor = new Color(1.0f, 0.75f, 0.0f),
-    EnableScanlines = true,
-    ScanlineIntensity = 0.1f
+	Columns = 80,
+	Rows = 24,
+	CharacterWidth = 8,
+	CharacterHeight = 12,
+	DisplayScale = 2,
+	FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_12.png"),
+	ForegroundColor = new Color(1.0f, 0.75f, 0.0f), // Amber
+	BackgroundColor = Colors.Black,
+	CursorColor = new Color(1.0f, 0.75f, 0.0f),
+	EnableScanlines = true,
+	ScanlineIntensity = 0.1f
 };
 ResourceSaver.Save(amber, "res://assets/themes/vt100_amber.tres");
 ```
@@ -183,16 +183,16 @@ ResourceSaver.Save(amber, "res://assets/themes/vt100_amber.tres");
 ```csharp
 var apple2 = new TerminalConfig
 {
-    Columns = 40,
-    Rows = 24,
-    CharacterWidth = 8,
-    CharacterHeight = 8,
-    DisplayScale = 3,
-    FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_8.png"),
-    ForegroundColor = new Color(0.0f, 1.0f, 0.0f), // Green
-    BackgroundColor = Colors.Black,
-    EnableScanlines = true,
-    ScanlineIntensity = 0.15f
+	Columns = 40,
+	Rows = 24,
+	CharacterWidth = 8,
+	CharacterHeight = 8,
+	DisplayScale = 3,
+	FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_8.png"),
+	ForegroundColor = new Color(0.0f, 1.0f, 0.0f), // Green
+	BackgroundColor = Colors.Black,
+	EnableScanlines = true,
+	ScanlineIntensity = 0.15f
 };
 ResourceSaver.Save(apple2, "res://assets/themes/apple2.tres");
 ```
@@ -201,16 +201,16 @@ ResourceSaver.Save(apple2, "res://assets/themes/apple2.tres");
 ```csharp
 var highContrast = new TerminalConfig
 {
-    Columns = 80,
-    Rows = 25,
-    CharacterWidth = 8,
-    CharacterHeight = 16,
-    DisplayScale = 1,
-    FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_16.png"),
-    ForegroundColor = Colors.White,
-    BackgroundColor = Colors.Black,
-    EnableScanlines = false, // Disable for maximum clarity
-    ScanlineIntensity = 0.0f
+	Columns = 80,
+	Rows = 25,
+	CharacterWidth = 8,
+	CharacterHeight = 16,
+	DisplayScale = 1,
+	FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_16.png"),
+	ForegroundColor = Colors.White,
+	BackgroundColor = Colors.Black,
+	EnableScanlines = false, // Disable for maximum clarity
+	ScanlineIntensity = 0.0f
 };
 ResourceSaver.Save(highContrast, "res://assets/themes/high_contrast.tres");
 ```
