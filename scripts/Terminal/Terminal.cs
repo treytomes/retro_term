@@ -15,9 +15,12 @@ public class Terminal
 {
 	#region Fields
 
-	private readonly char[,] _buffer;
+	private readonly TerminalCell[,] _buffer;
 	private int _cursorX;
 	private int _cursorY;
+	private byte _currentForegroundColor;
+	private byte _currentBackgroundColor;
+	private TerminalAttributes _currentAttributes;
 
 	#endregion
 
@@ -42,12 +45,15 @@ public class Terminal
 
 		Columns = columns;
 		Rows = rows;
-		_buffer = new char[columns, rows];
+		_buffer = new TerminalCell[columns, rows];
 		_cursorX = 0;
 		_cursorY = 0;
+		_currentForegroundColor = 7; // Default: light gray
+		_currentBackgroundColor = 0; // Default: black
+		_currentAttributes = TerminalAttributes.None;
 		CursorVisible = true;
 
-		// Initialize buffer with spaces
+		// Initialize buffer with blank cells
 		Clear();
 	}
 
@@ -106,12 +112,39 @@ public class Terminal
 	/// </summary>
 	public bool CursorVisible { get; set; }
 
+	/// <summary>
+	/// Gets or sets the current foreground color index for new characters.
+	/// </summary>
+	public byte CurrentForegroundColor
+	{
+		get => _currentForegroundColor;
+		set => _currentForegroundColor = value;
+	}
+
+	/// <summary>
+	/// Gets or sets the current background color index for new characters.
+	/// </summary>
+	public byte CurrentBackgroundColor
+	{
+		get => _currentBackgroundColor;
+		set => _currentBackgroundColor = value;
+	}
+
+	/// <summary>
+	/// Gets or sets the current text attributes for new characters.
+	/// </summary>
+	public TerminalAttributes CurrentAttributes
+	{
+		get => _currentAttributes;
+		set => _currentAttributes = value;
+	}
+
 	#endregion
 
 	#region Methods
 
 	/// <summary>
-	/// Sets a character at the specified position.
+	/// Sets a character at the specified position with current colors/attributes.
 	/// </summary>
 	/// <param name="x">Column position (0 to Columns-1).</param>
 	/// <param name="y">Row position (0 to Rows-1).</param>
@@ -120,7 +153,20 @@ public class Terminal
 	public void SetChar(int x, int y, char c)
 	{
 		ValidatePosition(x, y);
-		_buffer[x, y] = c;
+		_buffer[x, y] = new TerminalCell(c, _currentForegroundColor, _currentBackgroundColor, _currentAttributes);
+	}
+
+	/// <summary>
+	/// Sets a cell at the specified position.
+	/// </summary>
+	/// <param name="x">Column position (0 to Columns-1).</param>
+	/// <param name="y">Row position (0 to Rows-1).</param>
+	/// <param name="cell">Cell to set.</param>
+	/// <exception cref="ArgumentOutOfRangeException">Position is out of bounds.</exception>
+	public void SetCell(int x, int y, TerminalCell cell)
+	{
+		ValidatePosition(x, y);
+		_buffer[x, y] = cell;
 	}
 
 	/// <summary>
@@ -131,6 +177,19 @@ public class Terminal
 	/// <returns>Character at the specified position.</returns>
 	/// <exception cref="ArgumentOutOfRangeException">Position is out of bounds.</exception>
 	public char GetChar(int x, int y)
+	{
+		ValidatePosition(x, y);
+		return _buffer[x, y].Character;
+	}
+
+	/// <summary>
+	/// Gets the cell at the specified position.
+	/// </summary>
+	/// <param name="x">Column position (0 to Columns-1).</param>
+	/// <param name="y">Row position (0 to Rows-1).</param>
+	/// <returns>Cell at the specified position.</returns>
+	/// <exception cref="ArgumentOutOfRangeException">Position is out of bounds.</exception>
+	public TerminalCell GetCell(int x, int y)
 	{
 		ValidatePosition(x, y);
 		return _buffer[x, y];
@@ -154,8 +213,13 @@ public class Terminal
 
 		foreach (char c in text)
 		{
-			// Write character at cursor
-			_buffer[_cursorX, _cursorY] = c;
+			// Write character at cursor with current colors/attributes
+			_buffer[_cursorX, _cursorY] = new TerminalCell(
+				c,
+				_currentForegroundColor,
+				_currentBackgroundColor,
+				_currentAttributes
+			);
 
 			// Advance cursor
 			_cursorX++;
@@ -233,7 +297,7 @@ public class Terminal
 		// Clear the bottom row
 		for (int x = 0; x < Columns; x++)
 		{
-			_buffer[x, Rows - 1] = ' ';
+			_buffer[x, Rows - 1] = TerminalCell.Blank;
 		}
 	}
 
@@ -245,12 +309,12 @@ public class Terminal
 	/// </remarks>
 	public void Clear()
 	{
-		// Fill buffer with spaces
+		// Fill buffer with blank cells
 		for (int y = 0; y < Rows; y++)
 		{
 			for (int x = 0; x < Columns; x++)
 			{
-				_buffer[x, y] = ' ';
+				_buffer[x, y] = TerminalCell.Blank;
 			}
 		}
 
