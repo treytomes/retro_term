@@ -13,9 +13,47 @@ namespace RetroTerm.Terminal;
 /// </remarks>
 public class Terminal
 {
+	#region Fields
+
 	private readonly char[,] _buffer;
 	private int _cursorX;
 	private int _cursorY;
+
+	#endregion
+
+	#region Constructors
+
+	/// <summary>
+	/// Initializes a new terminal with the specified dimensions.
+	/// </summary>
+	/// <param name="columns">Number of character columns (must be > 0).</param>
+	/// <param name="rows">Number of character rows (must be > 0).</param>
+	/// <exception cref="ArgumentException">Columns or rows is less than or equal to zero.</exception>
+	public Terminal(int columns, int rows)
+	{
+		if (columns <= 0)
+		{
+			throw new ArgumentException("Columns must be greater than zero", nameof(columns));
+		}
+		if (rows <= 0)
+		{
+			throw new ArgumentException("Rows must be greater than zero", nameof(rows));
+		}
+
+		Columns = columns;
+		Rows = rows;
+		_buffer = new char[columns, rows];
+		_cursorX = 0;
+		_cursorY = 0;
+		CursorVisible = true;
+
+		// Initialize buffer with spaces
+		Clear();
+	}
+
+	#endregion
+
+	#region Properties
 
 	/// <summary>
 	/// Gets the number of character columns in the terminal.
@@ -68,33 +106,9 @@ public class Terminal
 	/// </summary>
 	public bool CursorVisible { get; set; }
 
-	/// <summary>
-	/// Initializes a new terminal with the specified dimensions.
-	/// </summary>
-	/// <param name="columns">Number of character columns (must be > 0).</param>
-	/// <param name="rows">Number of character rows (must be > 0).</param>
-	/// <exception cref="ArgumentException">Columns or rows is less than or equal to zero.</exception>
-	public Terminal(int columns, int rows)
-	{
-		if (columns <= 0)
-		{
-			throw new ArgumentException("Columns must be greater than zero", nameof(columns));
-		}
-		if (rows <= 0)
-		{
-			throw new ArgumentException("Rows must be greater than zero", nameof(rows));
-		}
+	#endregion
 
-		Columns = columns;
-		Rows = rows;
-		_buffer = new char[columns, rows];
-		_cursorX = 0;
-		_cursorY = 0;
-		CursorVisible = true;
-
-		// Initialize buffer with spaces
-		Clear();
-	}
+	#region Methods
 
 	/// <summary>
 	/// Sets a character at the specified position.
@@ -264,4 +278,6 @@ public class Terminal
 				$"Y must be between 0 and {Rows - 1}, got {y}");
 		}
 	}
+
+	#endregion
 }
