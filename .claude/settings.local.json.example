@@ -1,0 +1,11 @@
+{
+  "environment": {
+    "GITHUB_TOKEN": "your_github_token_here"
+  },
+  "notes": [
+    "This is an EXAMPLE file. Copy to settings.local.json and add your actual token.",
+    "settings.local.json is gitignored and will never be committed.",
+    "Get your token from: https://github.com/settings/tokens",
+    "Or use GitHub CLI: gh auth token"
+  ]
+}

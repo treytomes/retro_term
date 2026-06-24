@@ -1,0 +1,25 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Claude Code - Secrets Protection
+.claude/settings.local.json      # User-specific secrets (NEVER commit)
+.claude/**/*.secret              # Any .secret files
+.claude/**/*.key                 # Any .key files
+.env                             # Environment files
+.env.*                           # .env variants
+!.env.example                    # Allow .env.example template
+
+# C# Build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+# Test coverage reports
+coverage-report/
+**/coverage.cobertura.xml
+TestResults/
+/android/
