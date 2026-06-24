@@ -13,6 +13,8 @@ namespace RetroTerm.Terminal;
 [GlobalClass]
 public partial class TerminalConfig : Resource
 {
+	#region Properties
+
 	/// <summary>
 	/// Number of character columns in the terminal (horizontal).
 	/// </summary>
@@ -172,6 +174,10 @@ public partial class TerminalConfig : Resource
 	/// </summary>
 	public int FontAtlasHeight => FontAtlasRows * CharacterHeight;
 
+	#endregion
+
+	#region Methods
+
 	/// <summary>
 	/// Gets the source rectangle for a character in the font atlas.
 	/// </summary>
@@ -226,4 +232,6 @@ public partial class TerminalConfig : Resource
 	/// Loads from res://assets/themes/vga.tres
 	/// </remarks>
 	public static TerminalConfig? LoadVGA() => LoadTheme("vga");
+
+	#endregion
 }
