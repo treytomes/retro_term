@@ -8,9 +8,16 @@ This directory contains all visual and audio assets for the retro terminal proje
 assets/
 ├── fonts/           # Bitmap fonts for terminal display
 │   ├── OEM437_8.png     # IBM PC Code Page 437 (8×8 pixels)
+│   ├── OEM437_12.png    # IBM PC Code Page 437 (8×12 pixels)
+│   ├── OEM437_16.png    # IBM PC Code Page 437 (8×16 pixels)
 │   └── README.md        # Font usage documentation
-├── shaders/         # CRT effects and visual shaders (to be added)
-└── themes/          # Theme definitions and resources (to be added)
+├── themes/          # Pre-configured terminal themes
+│   ├── ibm_pc.tres      # IBM PC DOS (80×25, 8×12)
+│   ├── commodore64.tres # Commodore 64 (40×25, 8×8)
+│   ├── vt100.tres       # VT100 Unix (80×24, 8×12)
+│   ├── vga.tres         # VGA text mode (80×25, 8×16)
+│   └── README.md        # Theme usage guide
+└── shaders/         # CRT effects and visual shaders (to be added)
 ```
 
 ## Current Assets
@@ -22,7 +29,36 @@ assets/
 - 8×8 pixels per character
 - 256 characters (16×16 grid)
 - Import configured for pixel-perfect rendering (no filtering)
-- See [fonts/README.md](fonts/README.md) for usage examples
+
+**OEM437_12.png** (4.1 KB)
+- 8×12 pixels per character
+- Better readability than 8×8
+
+**OEM437_16.png** (4.4 KB)
+- 8×16 pixels per character
+- Maximum readability
+
+See [fonts/README.md](fonts/README.md) for detailed usage.
+
+### Themes
+
+Pre-configured `TerminalConfig` resource files:
+
+**ibm_pc.tres** - Classic DOS terminal (80×25, 8×12 font)
+**commodore64.tres** - C64 PETSCII style (40×25, 8×8 font, blue colors)
+**vt100.tres** - Unix terminal (80×24, 8×12 font, green on black)
+**vga.tres** - VGA text mode (80×25, 8×16 font)
+
+Load in code:
+```csharp
+var config = TerminalConfig.LoadIBMPC();
+// or
+var config = TerminalConfig.LoadTheme("vt100");
+// or
+var config = GD.Load<TerminalConfig>("res://assets/themes/ibm_pc.tres");
+```
+
+See [themes/README.md](themes/README.md) for customization guide.
 
 ## Planned Assets
 

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TerminalConfig" load_steps=2 format=3 uid="uid://vt100green80x24"]
+
+[ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_vt100"]
+
+[resource]
+script = ExtResource("1_vt100")
+Columns = 80
+Rows = 24
+CharacterWidth = 8
+CharacterHeight = 12
+DisplayScale = 2
+FontAtlas = ExtResource("res://assets/fonts/OEM437_12.png")
+FontAtlasColumns = 16
+FontAtlasRows = 16
+ForegroundColor = Color(0, 1, 0, 1)
+BackgroundColor = Color(0, 0, 0, 1)
+CursorColor = Color(0, 1, 0, 1)
+CursorBlinkRate = 0.5
+EnableScanlines = true
+ScanlineIntensity = 0.1
+EnableCurvature = false
+CurvatureAmount = 0.15

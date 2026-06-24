@@ -185,82 +185,45 @@ public partial class TerminalConfig : Resource
 	}
 
 	/// <summary>
-	/// Creates a default IBM PC configuration (80×25, 8×8 font).
+	/// Loads a preset theme from resources.
 	/// </summary>
-	public static TerminalConfig CreateIBMPC()
+	/// <param name="themeName">Theme name: "ibm_pc", "commodore64", "vt100", or "vga".</param>
+	/// <returns>Loaded TerminalConfig resource, or null if not found.</returns>
+	public static TerminalConfig? LoadTheme(string themeName)
 	{
-		return new TerminalConfig
-		{
-			Columns = 80,
-			Rows = 25,
-			CharacterWidth = 8,
-			CharacterHeight = 12,
-			DisplayScale = 2,
-			FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_12.png"),
-			ForegroundColor = Colors.LightGray,
-			BackgroundColor = Colors.Black,
-			EnableScanlines = true,
-			ScanlineIntensity = 0.15f
-		};
+		string path = $"res://assets/themes/{themeName}.tres";
+		return GD.Load<TerminalConfig>(path);
 	}
 
 	/// <summary>
-	/// Creates a Commodore 64 style configuration (40×25, 8×8 font, blue background).
+	/// Loads the default IBM PC configuration (80×25, 8×12 font).
 	/// </summary>
-	public static TerminalConfig CreateCommodore64()
-	{
-		return new TerminalConfig
-		{
-			Columns = 40,
-			Rows = 25,
-			CharacterWidth = 8,
-			CharacterHeight = 8,
-			DisplayScale = 3,
-			FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_8.png"),
-			ForegroundColor = new Color(0.4f, 0.6f, 1.0f), // Light blue
-			BackgroundColor = new Color(0.25f, 0.25f, 0.65f), // Dark blue
-			EnableScanlines = true,
-			ScanlineIntensity = 0.2f
-		};
-	}
+	/// <remarks>
+	/// Loads from res://assets/themes/ibm_pc.tres
+	/// </remarks>
+	public static TerminalConfig? LoadIBMPC() => LoadTheme("ibm_pc");
 
 	/// <summary>
-	/// Creates a VT100 style configuration (80×24, green text on black).
+	/// Loads the Commodore 64 style configuration (40×25, 8×8 font, blue background).
 	/// </summary>
-	public static TerminalConfig CreateVT100()
-	{
-		return new TerminalConfig
-		{
-			Columns = 80,
-			Rows = 24,
-			CharacterWidth = 8,
-			CharacterHeight = 12,
-			DisplayScale = 2,
-			FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_12.png"),
-			ForegroundColor = new Color(0.0f, 1.0f, 0.0f), // Green
-			BackgroundColor = Colors.Black,
-			EnableScanlines = true,
-			ScanlineIntensity = 0.1f
-		};
-	}
+	/// <remarks>
+	/// Loads from res://assets/themes/commodore64.tres
+	/// </remarks>
+	public static TerminalConfig? LoadCommodore64() => LoadTheme("commodore64");
 
 	/// <summary>
-	/// Creates a VGA text mode configuration (80×25, 9×16 font).
+	/// Loads the VT100 style configuration (80×24, 8×12 font, green text on black).
 	/// </summary>
-	public static TerminalConfig CreateVGA()
-	{
-		return new TerminalConfig
-		{
-			Columns = 80,
-			Rows = 25,
-			CharacterWidth = 8,
-			CharacterHeight = 16,
-			DisplayScale = 1,
-			FontAtlas = GD.Load<Texture2D>("res://assets/fonts/OEM437_16.png"),
-			ForegroundColor = Colors.LightGray,
-			BackgroundColor = Colors.Black,
-			EnableScanlines = true,
-			ScanlineIntensity = 0.12f
-		};
-	}
+	/// <remarks>
+	/// Loads from res://assets/themes/vt100.tres
+	/// </remarks>
+	public static TerminalConfig? LoadVT100() => LoadTheme("vt100");
+
+	/// <summary>
+	/// Loads the VGA text mode configuration (80×25, 8×16 font).
+	/// </summary>
+	/// <remarks>
+	/// Loads from res://assets/themes/vga.tres
+	/// </remarks>
+	public static TerminalConfig? LoadVGA() => LoadTheme("vga");
 }
