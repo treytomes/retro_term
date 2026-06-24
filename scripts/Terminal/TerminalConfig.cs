@@ -89,6 +89,17 @@ public partial class TerminalConfig : Resource
 	public Texture2D? FontAtlas { get; set; }
 
 	/// <summary>
+	/// Color palette for terminal display (up to 256 colors).
+	/// </summary>
+	/// <remarks>
+	/// If not set, a default ANSI color palette will be created.
+	/// Color indices 0-15 are standard ANSI colors.
+	/// Color indices 16-255 can be used for extended colors.
+	/// </remarks>
+	[Export]
+	public TerminalPalette? Palette { get; set; }
+
+	/// <summary>
 	/// Number of columns in the font atlas grid.
 	/// </summary>
 	/// <remarks>

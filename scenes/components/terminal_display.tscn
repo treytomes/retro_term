@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://term_display_comp"]
+
+[ext_resource type="Script" path="res://scripts/Terminal/TerminalDisplay.cs" id="1_terminal_display"]
+
+[node name="TerminalDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_terminal_display")

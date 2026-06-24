@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/RetroTerm.Tests/RetroTerm.Tests.csproj" />
+  </Folder>
+  <Project Path="RetroTerm.csproj">
+    <BuildType Project="Debug" />
+  </Project>
+</Solution>

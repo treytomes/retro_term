@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bb3rfx6yjm8ng"]
+
+[ext_resource type="PackedScene" path="res://scenes/components/terminal_display.tscn" id="1_terminal"]
+[ext_resource type="Script" uid="uid://3fjepn3upwmx" path="res://scenes/TestTerminal.cs" id="2_test_script"]
+[ext_resource type="Resource" uid="uid://b1pc80x25dos" path="res://assets/themes/ibm_pc.tres" id="3_cmj4d"]
+
+[node name="TestTerminal" type="Node2D" unique_id=931554851]
+script = ExtResource("2_test_script")
+
+[node name="TerminalDisplay" parent="." unique_id=1350686229 instance=ExtResource("1_terminal")]
+unique_name_in_owner = true
+Config = ExtResource("3_cmj4d")

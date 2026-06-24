@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="TerminalConfig" load_steps=2 format=3 uid="uid://vga80x25x16"]
+[gd_resource type="Resource" script_class="TerminalConfig" load_steps=3 format=3 uid="uid://vga80x25x16"]
 
-[ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_vga"]
+[ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://fjedx2tf2gck" path="res://assets/fonts/OEM437_16.png" id="2_font"]
 
 [resource]
-script = ExtResource("1_vga")
+script = ExtResource("1_script")
 Columns = 80
 Rows = 25
 CharacterWidth = 8
 CharacterHeight = 16
 DisplayScale = 1
-FontAtlas = ExtResource("res://assets/fonts/OEM437_16.png")
+FontAtlas = ExtResource("2_font")
 FontAtlasColumns = 16
 FontAtlasRows = 16
 ForegroundColor = Color(0.827451, 0.827451, 0.827451, 1)
