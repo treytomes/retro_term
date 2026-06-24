@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="TerminalConfig" load_steps=2 format=3 uid="uid://b1pc80x25dos"]
+[gd_resource type="Resource" script_class="TerminalConfig" load_steps=3 format=3 uid="uid://b1pc80x25dos"]
 
-[ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_ibmpc"]
+[ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c8v7xax1y0a2b" path="res://assets/fonts/OEM437_12.png" id="2_font"]
 
 [resource]
-script = ExtResource("1_ibmpc")
+script = ExtResource("1_script")
 Columns = 80
 Rows = 25
 CharacterWidth = 8
 CharacterHeight = 12
 DisplayScale = 2
-FontAtlas = ExtResource("res://assets/fonts/OEM437_12.png")
+FontAtlas = ExtResource("2_font")
 FontAtlasColumns = 16
 FontAtlasRows = 16
 ForegroundColor = Color(0.827451, 0.827451, 0.827451, 1)

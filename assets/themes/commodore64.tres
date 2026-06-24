@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="TerminalConfig" load_steps=2 format=3 uid="uid://c64blue40x25"]
+[gd_resource type="Resource" script_class="TerminalConfig" load_steps=3 format=3 uid="uid://c64blue40x25"]
 
-[ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_c64"]
+[ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bfp8xvh4qnxqa" path="res://assets/fonts/OEM437_8.png" id="2_font"]
 
 [resource]
-script = ExtResource("1_c64")
+script = ExtResource("1_script")
 Columns = 40
 Rows = 25
 CharacterWidth = 8
 CharacterHeight = 8
 DisplayScale = 3
-FontAtlas = ExtResource("res://assets/fonts/OEM437_8.png")
+FontAtlas = ExtResource("2_font")
 FontAtlasColumns = 16
 FontAtlasRows = 16
 ForegroundColor = Color(0.4, 0.6, 1, 1)
