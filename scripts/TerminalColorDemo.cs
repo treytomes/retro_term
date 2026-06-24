@@ -95,13 +95,13 @@ public partial class TerminalColorDemo : Node
 		terminal.CurrentForegroundColor = 7;
 		terminal.WriteLine("");
 
-		// Colorful pattern
+		// Colorful pattern using CP437 block character (0xDB = 219)
 		terminal.WriteLine("Rainbow Pattern:");
 		byte[] colors = { 1, 3, 2, 6, 4, 5, 9, 11, 10, 14, 12, 13 };
 		foreach (byte color in colors)
 		{
 			terminal.CurrentForegroundColor = color;
-			terminal.Write("█");
+			terminal.Write("Û"); // CP437 full block character
 		}
 		terminal.WriteLine("");
 

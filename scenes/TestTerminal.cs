@@ -92,13 +92,13 @@ public partial class TestTerminal : Node2D
 		term.CurrentForegroundColor = 7;
 		term.WriteLine("");
 
-		// Colorful pattern
+		// Colorful pattern using CP437 block character (0xDB = 219)
 		term.WriteLine("Rainbow Pattern:");
 		byte[] colors = { 1, 3, 2, 6, 4, 5, 9, 11, 10, 14, 12, 13 };
 		foreach (byte color in colors)
 		{
 			term.CurrentForegroundColor = color;
-			term.Write("█");
+			term.Write("Û"); // CP437 full block character
 		}
 		term.WriteLine("");
 
