@@ -4,11 +4,12 @@ A Godot 4.7 + C# retro terminal environment frontend for the ECMA BASIC interpre
 
 ## Features
 
-- **Authentic Terminal Emulation**: Character-based display with retro fonts
+- **Authentic Terminal Emulation**: Character-based display with IBM PC OEM437 bitmap font (8×8 pixels)
 - **CRT Visual Effects**: Scanlines, phosphor glow, curvature, and screen flicker
 - **ECMA BASIC Integration**: Full integration with the [ecma_basic](https://github.com/treytomes/ecma_basic) interpreter
 - **Multiple Themes**: Commodore 64, Apple II, IBM PC, VT100, and custom themes
 - **Modern Conveniences**: Optional features like copy/paste, file browser, and command history
+- **Pixel-Perfect Rendering**: No anti-aliasing - authentic retro pixelated aesthetic
 
 ## Related Projects
 
