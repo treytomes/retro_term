@@ -117,6 +117,33 @@ public partial class TerminalDisplay : Control
 	}
 
 	/// <summary>
+	/// Called when input events occur.
+	/// </summary>
+	/// <param name="event">The input event.</param>
+	public override void _Input(InputEvent @event)
+	{
+		if (_terminal == null)
+		{
+			return;
+		}
+
+		// Handle Insert key to toggle cursor style (block <-> underline)
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo)
+		{
+			if (keyEvent.Keycode == Key.Insert)
+			{
+				// Toggle between block (insert mode) and underline (overwrite mode)
+				_terminal.CursorStyle = _terminal.CursorStyle == CursorStyle.Block
+					? CursorStyle.Underline
+					: CursorStyle.Block;
+
+				QueueRedraw();
+				AcceptEvent();
+			}
+		}
+	}
+
+	/// <summary>
 	/// Called when the node needs to be redrawn.
 	/// </summary>
 	public override void _Draw()
@@ -215,13 +242,34 @@ public partial class TerminalDisplay : Control
 				_terminal.CursorY * scaledCharHeight
 			);
 
-			Rect2 cursorRect = new Rect2(
-				cursorPos,
-				new Vector2(scaledCharWidth, scaledCharHeight)
-			);
+			switch (_terminal.CursorStyle)
+			{
+				case CursorStyle.Block:
+					// Draw full block cursor using CP437 character 219 (0xDB)
+					Rect2 destRect = new Rect2(cursorPos, new Vector2(scaledCharWidth, scaledCharHeight));
+					Rect2 sourceRect = Config.GetCharacterRect((char)219); // CP437 full block 'Û'
+					DrawTextureRectRegion(
+						Config.FontAtlas,
+						destRect,
+						sourceRect,
+						Config.CursorColor
+					);
+					break;
 
-			// Draw cursor as a filled rectangle
-			DrawRect(cursorRect, Config.CursorColor, false, 2.0f * Config.DisplayScale);
+				case CursorStyle.Underline:
+					// Draw underline cursor (line at bottom of cell)
+					Vector2 underlineStart = new Vector2(cursorPos.X, cursorPos.Y + scaledCharHeight - Config.DisplayScale);
+					Vector2 underlineEnd = new Vector2(cursorPos.X + scaledCharWidth, cursorPos.Y + scaledCharHeight - Config.DisplayScale);
+					DrawLine(underlineStart, underlineEnd, Config.CursorColor, 2.0f * Config.DisplayScale);
+					break;
+
+				case CursorStyle.VerticalBar:
+					// Draw vertical bar cursor (line at left edge of cell)
+					Vector2 barStart = new Vector2(cursorPos.X, cursorPos.Y);
+					Vector2 barEnd = new Vector2(cursorPos.X, cursorPos.Y + scaledCharHeight);
+					DrawLine(barStart, barEnd, Config.CursorColor, 2.0f * Config.DisplayScale);
+					break;
+			}
 		}
 	}
 

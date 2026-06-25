@@ -113,6 +113,15 @@ public class Terminal
 	public bool CursorVisible { get; set; }
 
 	/// <summary>
+	/// Gets or sets the cursor display style.
+	/// </summary>
+	/// <remarks>
+	/// Block cursor is typical for insert mode.
+	/// Underline cursor is typical for overwrite mode.
+	/// </remarks>
+	public CursorStyle CursorStyle { get; set; } = CursorStyle.Block;
+
+	/// <summary>
 	/// Gets or sets the current foreground color index for new characters.
 	/// </summary>
 	public byte CurrentForegroundColor
