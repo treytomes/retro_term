@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://toolbar"]
+
+[ext_resource type="Script" path="res://scripts/UI/RetroToolbar.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c8v7xax1y0a2b" path="res://assets/fonts/OEM437_12.png" id="2_font"]
+
+[node name="RetroToolbar" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 12.0
+grow_horizontal = 2
+script = ExtResource("1_script")
+BackgroundColor = Color(0, 0, 0.667, 1)
+NormalColor = Color(0.667, 0.667, 0.667, 1)
+HighlightColor = Color(1, 1, 0, 1)

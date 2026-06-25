@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://settings_menu"]
+
+[ext_resource type="Script" path="res://scripts/UI/SettingsMenuUI.cs" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://c8v7xax1y0a2b" path="res://assets/fonts/OEM437_12.png" id="2_font"]
+
+[node name="SettingsMenu" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+BackgroundColor = Color(0, 0, 0, 1)
+BorderColor = Color(0.667, 0.667, 0.667, 1)
+TextColor = Color(0.667, 0.667, 0.667, 1)
+HighlightColor = Color(1, 1, 0, 1)
+ValueColor = Color(0, 1, 1, 1)

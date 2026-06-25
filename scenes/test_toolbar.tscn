@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://test_toolbar"]
+
+[ext_resource type="PackedScene" uid="uid://toolbar" path="res://scenes/ui/toolbar.tscn" id="1_toolbar"]
+[ext_resource type="PackedScene" uid="uid://settings_menu" path="res://scenes/ui/settings_menu.tscn" id="2_settings"]
+[ext_resource type="PackedScene" path="res://scenes/components/terminal_display.tscn" id="3_terminal"]
+[ext_resource type="Resource" uid="uid://b1pc80x25dos" path="res://assets/themes/ibm_pc.tres" id="4_theme"]
+[ext_resource type="Script" path="res://scenes/TestToolbar.cs" id="5_script"]
+
+[node name="TestToolbar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_script")
+
+[node name="RetroToolbar" parent="." instance=ExtResource("1_toolbar")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="TerminalDisplay" parent="." instance=ExtResource("3_terminal")]
+unique_name_in_owner = true
+layout_mode = 1
+offset_top = 12.0
+anchor_bottom = 0.0
+offset_bottom = 0.0
+Config = ExtResource("4_theme")
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_settings")]
+unique_name_in_owner = true
+layout_mode = 1
