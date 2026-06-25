@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="TerminalConfig" load_steps=3 format=3 uid="uid://vt100green80x24"]
+[gd_resource type="Resource" script_class="TerminalConfig" load_steps=4 format=3 uid="uid://vt100green80x24"]
 
 [ext_resource type="Script" path="res://scripts/Terminal/TerminalConfig.cs" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://c8v7xax1y0a2b" path="res://assets/fonts/OEM437_12.png" id="2_font"]
+[ext_resource type="Resource" uid="uid://ckxl2yj4qhgxo" path="res://assets/palettes/ansi_default.tres" id="3_palette"]
 
 [resource]
 script = ExtResource("1_script")
@@ -11,6 +12,7 @@ CharacterWidth = 8
 CharacterHeight = 12
 DisplayScale = 2
 FontAtlas = ExtResource("2_font")
+Palette = ExtResource("3_palette")
 FontAtlasColumns = 16
 FontAtlasRows = 16
 ForegroundColor = Color(0, 1, 0, 1)
