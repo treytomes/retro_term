@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TerminalSettings" load_steps=2 format=3 uid="uid://settings_classic"]
+
+[ext_resource type="Script" path="res://scripts/Terminal/TerminalSettings.cs" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+CommandHistorySize = 50
+TabWidth = 8
+DefaultCursorStyle = 0
+ClearSelectionAfterCopy = true
+PasteStripNewlines = true
+PasteConvertTabs = true
+MaxPasteLength = 512
+AutoScrollOnOutput = true
+BellEnabled = true

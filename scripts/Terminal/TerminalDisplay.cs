@@ -37,6 +37,17 @@ public partial class TerminalDisplay : Control
 	public TerminalConfig? Config { get; set; }
 
 	/// <summary>
+	/// Terminal behavior settings (history size, tab width, paste behavior, etc.).
+	/// </summary>
+	/// <remarks>
+	/// Can be set in the Godot inspector or assigned programmatically.
+	/// If not set, defaults to standard settings on _Ready().
+	/// Separate from Config (display) - this controls behavior.
+	/// </remarks>
+	[Export]
+	public TerminalSettings? Settings { get; set; }
+
+	/// <summary>
 	/// Gets the Terminal instance managing the character buffer.
 	/// </summary>
 	/// <remarks>
@@ -64,6 +75,15 @@ public partial class TerminalDisplay : Control
 			return;
 		}
 
+		// Load default settings if not set
+		Settings ??= TerminalSettings.CreateDefault();
+
+		if (Settings == null)
+		{
+			GD.PrintErr("TerminalDisplay: Failed to load terminal settings");
+			return;
+		}
+
 		// Validate font atlas
 		if (Config.FontAtlas == null)
 		{
@@ -71,8 +91,11 @@ public partial class TerminalDisplay : Control
 			return;
 		}
 
-		// Create terminal with configured dimensions
-		_terminal = new Terminal(Config.Columns, Config.Rows);
+		// Create terminal with configured dimensions and apply default cursor style
+		_terminal = new Terminal(Config.Columns, Config.Rows)
+		{
+			CursorStyle = Settings.DefaultCursorStyle
+		};
 
 		// Set control size to match terminal dimensions
 		CustomMinimumSize = new Vector2(Config.DisplayWidth, Config.DisplayHeight);
