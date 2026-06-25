@@ -16,9 +16,10 @@ public partial class RetroToolbar : Control
 
 	private int _selectedIndex = -1; // -1 = no selection
 	private readonly string[] _menuItems = { "File", "Edit", "Settings", "Help" };
-	private Font? _font;
+	private Texture2D? _fontAtlas;
 	private int _charWidth = 8;
 	private int _charHeight = 12;
+	private int _atlasColumns = 16;
 
 	#endregion
 
@@ -53,15 +54,15 @@ public partial class RetroToolbar : Control
 	public Color HighlightColor { get; set; } = new Color(1.0f, 1.0f, 0.0f); // Yellow
 
 	/// <summary>
-	/// Font to use for menu text.
+	/// Font atlas texture for rendering text.
 	/// </summary>
 	[Export]
-	public Font? Font
+	public Texture2D? FontAtlas
 	{
-		get => _font;
+		get => _fontAtlas;
 		set
 		{
-			_font = value;
+			_fontAtlas = value;
 			QueueRedraw();
 		}
 	}
@@ -143,7 +144,7 @@ public partial class RetroToolbar : Control
 
 	public override void _Draw()
 	{
-		if (_font == null)
+		if (_fontAtlas == null)
 		{
 			return;
 		}
@@ -153,7 +154,7 @@ public partial class RetroToolbar : Control
 
 		// Draw separator lines (CP437 box characters)
 		// ║ (186) at start and end
-		DrawString(_font, new Vector2(0, _charHeight - 2), "║", modulate: NormalColor);
+		DrawText(0, 0, "║", NormalColor);
 
 		// Draw menu items
 		float x = _charWidth * 2; // Start after left border
@@ -164,33 +165,82 @@ public partial class RetroToolbar : Control
 			// Add highlight background for selected item
 			if (i == _selectedIndex)
 			{
-				float itemWidth = _font.GetStringSize(_menuItems[i]).X;
+				float itemWidth = _menuItems[i].Length * _charWidth;
 				DrawRect(new Rect2(x - 2, 0, itemWidth + 4, _charHeight),
 					new Color(0.667f, 0.667f, 0.0f), true); // Yellow background
 			}
 
-			DrawString(_font, new Vector2(x, _charHeight - 2), _menuItems[i], modulate: color);
+			DrawText(x, 0, _menuItems[i], color);
 
-			x += _font.GetStringSize(_menuItems[i]).X + _charWidth;
+			x += _menuItems[i].Length * _charWidth + _charWidth;
 
 			// Draw separator between items
 			if (i < _menuItems.Length - 1)
 			{
-				DrawString(_font, new Vector2(x, _charHeight - 2), "│", modulate: NormalColor);
+				DrawText(x, 0, "│", NormalColor);
 				x += _charWidth * 2;
 			}
 		}
 
 		// Draw right border and hint
 		string hint = "F10=Menu";
-		float hintX = Size.X - _font.GetStringSize(hint).X - _charWidth * 2;
-		DrawString(_font, new Vector2(hintX, _charHeight - 2), hint, modulate: NormalColor);
-		DrawString(_font, new Vector2(Size.X - _charWidth, _charHeight - 2), "║", modulate: NormalColor);
+		float hintX = Size.X - (hint.Length * _charWidth) - _charWidth * 2;
+		DrawText(hintX, 0, hint, NormalColor);
+		DrawText(Size.X - _charWidth, 0, "║", NormalColor);
 	}
 
 	#endregion
 
 	#region Private Methods
+
+	/// <summary>
+	/// Draws text at the specified position using the font atlas.
+	/// </summary>
+	/// <param name="x">X position in pixels.</param>
+	/// <param name="y">Y position in pixels.</param>
+	/// <param name="text">Text to draw.</param>
+	/// <param name="color">Color to modulate the text.</param>
+	private void DrawText(float x, float y, string text, Color color)
+	{
+		if (_fontAtlas == null || string.IsNullOrEmpty(text))
+		{
+			return;
+		}
+
+		float currentX = x;
+		foreach (char c in text)
+		{
+			// Get character rectangle from atlas
+			Rect2 sourceRect = GetCharacterRect(c);
+
+			// Calculate destination
+			Rect2 destRect = new Rect2(currentX, y, _charWidth, _charHeight);
+
+			// Draw character
+			DrawTextureRectRegion(_fontAtlas, destRect, sourceRect, color);
+
+			currentX += _charWidth;
+		}
+	}
+
+	/// <summary>
+	/// Gets the source rectangle for a character in the font atlas.
+	/// </summary>
+	/// <param name="c">Character to get rectangle for.</param>
+	/// <returns>Rectangle in the font atlas texture.</returns>
+	private Rect2 GetCharacterRect(char c)
+	{
+		int charCode = c;
+		int col = charCode % _atlasColumns;
+		int row = charCode / _atlasColumns;
+
+		return new Rect2(
+			col * _charWidth,
+			row * _charHeight,
+			_charWidth,
+			_charHeight
+		);
+	}
 
 	/// <summary>
 	/// Gets the menu item index at the specified mouse position.
@@ -199,7 +249,7 @@ public partial class RetroToolbar : Control
 	/// <returns>Menu item index, or -1 if no item at position.</returns>
 	private int GetMenuItemAtPosition(Vector2 position)
 	{
-		if (_font == null || position.Y < 0 || position.Y > _charHeight)
+		if (_fontAtlas == null || position.Y < 0 || position.Y > _charHeight)
 		{
 			return -1;
 		}
@@ -207,7 +257,7 @@ public partial class RetroToolbar : Control
 		float x = _charWidth * 2; // Start after left border
 		for (int i = 0; i < _menuItems.Length; i++)
 		{
-			float itemWidth = _font.GetStringSize(_menuItems[i]).X;
+			float itemWidth = _menuItems[i].Length * _charWidth;
 
 			if (position.X >= x && position.X < x + itemWidth)
 			{

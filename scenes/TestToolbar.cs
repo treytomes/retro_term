@@ -26,13 +26,8 @@ public partial class TestToolbar : Control
 			return;
 		}
 
-		// Load font for toolbar and settings menu
-		var font = GD.Load<Font>("res://assets/fonts/OEM437_12.png");
-		if (font != null)
-		{
-			_toolbar.Font = font;
-			_settingsMenu.Font = font;
-		}
+		// Font atlas already set in toolbar scene
+		// Settings menu font setup would go here but needs DrawTextureRectRegion refactor
 
 		// Connect signals
 		_toolbar.MenuSelected += OnToolbarMenuSelected;
